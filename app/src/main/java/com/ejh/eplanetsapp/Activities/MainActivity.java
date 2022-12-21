@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -50,26 +51,24 @@ public class MainActivity extends AppCompatActivity {
         planetList=getPlanets(search);
         planetRecyclerViewAdapter = new planetRecyclerViewAdapter(this, planetList);
         recycleView.setAdapter(planetRecyclerViewAdapter);
-
     }
-
     public List <planet> getPlanets(String searchTerm){
     planetList.clear();
-    String myUrl= "https://planets-info-by-newbapi.p.rapidapi.com/?s"+searchTerm+"&r=json";
-        JsonObjectRequest jobjectRequest = new JsonObjectRequest(myUrl, new Response.Listener<JSONObject>() {
+    String myUrl= "https://planets-info-by-newbapi.p.rapidapi.com/api/v1/planet/list";
+        JsonArrayRequest jarrayRequest = new JsonArrayRequest(myUrl, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
+                Log.d("planet","planet"+ response);
                 try {
-
                     for (int i = 0; i < 8; i++) {
-                        String s = Integer.toString(i);
-                        JSONArray planetArray = response.getJSONArray(s);
+                        JSONArray planetArray = response.getJSONArray(i);
                     JSONObject planetObj = planetArray.getJSONObject(0);
                     planet planet = new planet();
                     planet.setName(planetObj.getString("name"));
                     planet.setDesc(planetObj.getString("description"));
                     planet.setWiki(planetObj.getString("wikiLink"));
-                    planetList.add(planet); //tout cela est probablement faux :(( je le corrigerai
+                    planetList.add(planet); //eh
+
                     }
                     planetRecyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("tag", "error" +error);
 
             }
         })
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             return params;
         }
         };
-            rq.add(jobjectRequest);
+            rq.add(jarrayRequest);
     return planetList;
     }
 }
