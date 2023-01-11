@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private planetRecyclerViewAdapter planetRecyclerViewAdapter;
     private List<planet> planetList;
     private RequestQueue rq;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +49,22 @@ public class MainActivity extends AppCompatActivity {
         planetList= new ArrayList<>();
 
         Prefs prefs = new Prefs(MainActivity.this);
-        String search = prefs.getSearch();
-        planetList=getPlanets(search);
+        planetList=getPlanets();
         planetRecyclerViewAdapter = new planetRecyclerViewAdapter(this, planetList);
         recycleView.setAdapter(planetRecyclerViewAdapter);
     }
-    public List <planet> getPlanets(String searchTerm){
+    public List <planet> getPlanets(){
     planetList.clear();
     String myUrl= "https://planets-info-by-newbapi.p.rapidapi.com/api/v1/planet/list";
         JsonArrayRequest jarrayRequest = new JsonArrayRequest(myUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("planet","planet"+ response);
+                Log.d("jason","planet"+ response);
                 try {
+                    textView.setText(response.toString());
                     for (int i = 0; i < 8; i++) {
-                        JSONArray planetArray = response.getJSONArray(i);
-                    JSONObject planetObj = planetArray.getJSONObject(0);
+                        JSONArray planetArray = response;
+                    JSONObject planetObj = planetArray.getJSONObject(i);
                     planet planet = new planet();
                     planet.setName(planetObj.getString("name"));
                     planet.setDesc(planetObj.getString("description"));
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("tag", "error" +error);
+                Log.d("tag", "oh no" +error);
 
             }
         })

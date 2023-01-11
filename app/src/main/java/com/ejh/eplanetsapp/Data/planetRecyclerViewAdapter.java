@@ -7,20 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.ejh.eplanetsapp.Model.planet;
 import com.ejh.eplanetsapp.R;
 import com.squareup.picasso.Picasso;
-
 import java.text.CollationElementIterator;
 import java.util.List;
 
 public class planetRecyclerViewAdapter extends RecyclerView.Adapter<planetRecyclerViewAdapter.ViewHolder> {
-    private Context context;
+     Context context;
     private List <planet> planetlist;
+
 
 public planetRecyclerViewAdapter (Context context, List<planet> planet){
     this.context = context;
@@ -39,9 +37,12 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
     public void onBindViewHolder(@NonNull planetRecyclerViewAdapter.ViewHolder holder, int position) {
     planet planet = planetlist.get(position);
     String imageLink = planet.getImage();
-    holder.name.setText(planet.getName());
-        Picasso.get().load(imageLink).fit().
-                placeholder(android.R.drawable.ic_btn_speak_now).into(holder.image);
+    holder.name.setText("Name" + planet.getName());
+        Picasso.get()
+                .load(imageLink)
+                .fit()
+                .placeholder(android.R.drawable.ic_btn_speak_now)
+                .into(holder.image);
 
     }
 
@@ -56,7 +57,6 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
 
         public ViewHolder(@NonNull View itemView, Context context){
         super (itemView);
-        context = context;
         name=itemView.findViewById(R.id.planetNameId);
         image=itemView.findViewById(R.id.planetImageId);
     }
