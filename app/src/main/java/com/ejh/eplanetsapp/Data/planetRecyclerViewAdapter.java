@@ -1,6 +1,7 @@
 package com.ejh.eplanetsapp.Data;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,10 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
     public void onBindViewHolder(@NonNull planetRecyclerViewAdapter.ViewHolder holder, int position) {
     planet planet = planetlist.get(position);
     String imageLink = planet.getImage();
-    holder.name.setText("Name" + planet.getName());
+    String Name = planet.getName();
+    String Desc = planet.getDesc();
+    holder.name.setText("Name: " + Name);
+    holder.desc.setText("Description: " + Desc);
         Picasso.get()
                 .load(imageLink)
                 .fit()
@@ -50,14 +54,14 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
     public int getItemCount() {
         return planetlist.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
+        TextView desc;
         ImageView image;
-
         public ViewHolder(@NonNull View itemView, Context context){
         super (itemView);
         name=itemView.findViewById(R.id.planetNameId);
+        desc=itemView.findViewById(R.id.planetDescriptionId);
         image=itemView.findViewById(R.id.planetImageId);
     }
     }

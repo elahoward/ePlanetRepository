@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private planetRecyclerViewAdapter planetRecyclerViewAdapter;
     private List<planet> planetList;
     private RequestQueue rq;
-    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         JsonArrayRequest jarrayRequest = new JsonArrayRequest(myUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("jason","planet"+ response);
+
                 try {
                         for (int s = 0; s < 8; s++) {
                             JSONObject planetObj = response.getJSONObject(s);
@@ -68,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
                             planet.setName(planetObj.getString("name"));
                             planet.setDesc(planetObj.getString("description"));
                             planet.setWiki(planetObj.getString("wikiLink"));
+                            planet.setImage(planetObj.getJSONArray("imgSrc").getJSONObject(0).getString("img"));
                             planetList.add(planet);
-
+                            Log.d("jason",planet.getName());
                         }
 
                     planetRecyclerViewAdapter.notifyDataSetChanged();
