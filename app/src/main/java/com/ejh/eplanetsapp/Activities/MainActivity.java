@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recycleView=findViewById(R.id.recycleView);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
+
         planetList= new ArrayList<>();
 
         Prefs prefs = new Prefs(MainActivity.this);
@@ -61,17 +62,16 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 Log.d("jason","planet"+ response);
                 try {
-                    textView.setText(response.toString());
-                    for (int i = 0; i < 8; i++) {
-                        JSONArray planetArray = response;
-                    JSONObject planetObj = planetArray.getJSONObject(i);
-                    planet planet = new planet();
-                    planet.setName(planetObj.getString("name"));
-                    planet.setDesc(planetObj.getString("description"));
-                    planet.setWiki(planetObj.getString("wikiLink"));
-                    planetList.add(planet); //eh
+                        for (int s = 0; s < 8; s++) {
+                            JSONObject planetObj = response.getJSONObject(s);
+                            planet planet = new planet();
+                            planet.setName(planetObj.getString("name"));
+                            planet.setDesc(planetObj.getString("description"));
+                            planet.setWiki(planetObj.getString("wikiLink"));
+                            planetList.add(planet);
 
-                    }
+                        }
+
                     planetRecyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
