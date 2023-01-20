@@ -6,14 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ejh.eplanetsapp.Data.planetRecyclerViewAdapter;
 import com.ejh.eplanetsapp.Model.planet;
@@ -45,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         recycleView=findViewById(R.id.recycleView);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-
         planetList= new ArrayList<>();
 
         Prefs prefs = new Prefs(MainActivity.this);
         planetList=getPlanets();
         planetRecyclerViewAdapter = new planetRecyclerViewAdapter(this, planetList);
         recycleView.setAdapter(planetRecyclerViewAdapter);
+        planetRecyclerViewAdapter.notifyDataSetChanged();
     }
     public List <planet> getPlanets(){
     planetList.clear();
@@ -71,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                             planetList.add(planet);
                             Log.d("jason",planet.getName());
                         }
-
                     planetRecyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -89,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws  AuthFailureError
         {
             Map<String, String> params= new HashMap<>();
-            params.put ("X-RapidAPI-Host", "planets-info-by-newbapi.p.rapidapi.com");
-            params.put ("X-RapidAPI-Key", "84ea392cf5msh0064c776cf95c0cp10e832jsnf107ffbd881e");
+            params.put("X-RapidAPI-Host", "planets-info-by-newbapi.p.rapidapi.com");
+            params.put("X-RapidAPI-Key", "84ea392cf5msh0064c776cf95c0cp10e832jsnf107ffbd881e");
             return params;
         }
         };

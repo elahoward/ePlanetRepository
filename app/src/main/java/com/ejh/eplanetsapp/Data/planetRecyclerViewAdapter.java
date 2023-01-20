@@ -6,20 +6,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.ejh.eplanetsapp.Model.planet;
 import com.ejh.eplanetsapp.R;
 import com.squareup.picasso.Picasso;
-import java.text.CollationElementIterator;
 import java.util.List;
 
 public class planetRecyclerViewAdapter extends RecyclerView.Adapter<planetRecyclerViewAdapter.ViewHolder> {
      Context context;
     private List <planet> planetlist;
-
+//constructs class
 
 public planetRecyclerViewAdapter (Context context, List<planet> planet){
     this.context = context;
@@ -38,10 +40,8 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
     public void onBindViewHolder(@NonNull planetRecyclerViewAdapter.ViewHolder holder, int position) {
     planet planet = planetlist.get(position);
     String imageLink = planet.getImage();
-    String Name = planet.getName();
-    String Desc = planet.getDesc();
-    holder.name.setText("Name: " + Name);
-    holder.desc.setText("Description: " + Desc);
+    holder.name.setText("Name: " + planet.getName());
+    holder.desc.setText("Description: " + planet.getDesc());
         Picasso.get()
                 .load(imageLink)
                 .fit()
@@ -54,12 +54,15 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
     public int getItemCount() {
         return planetlist.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView desc;
         ImageView image;
-        public ViewHolder(@NonNull View itemView, Context context){
+        public ViewHolder(@NonNull View itemView, Context context)
+        {
         super (itemView);
+        context=context;
         name=itemView.findViewById(R.id.planetNameId);
         desc=itemView.findViewById(R.id.planetDescriptionId);
         image=itemView.findViewById(R.id.planetImageId);

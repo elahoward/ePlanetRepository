@@ -7,12 +7,16 @@ import android.content.SharedPreferences;
 public class Prefs {
     SharedPreferences sp;
     public Prefs (Activity activity){
-    sp= activity.getPreferences(Activity.MODE_PRIVATE);
+
+        sp= activity.getPreferences(Activity.MODE_PRIVATE);
     }
     public void setSearch(String search) {
+
         sp.edit().putString("search", search).commit();
     }
     public String getSearch(){
+
         return sp.getString("search", "Earth");
     }
+
 }
