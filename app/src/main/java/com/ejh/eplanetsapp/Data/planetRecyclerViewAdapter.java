@@ -38,10 +38,10 @@ public planetRecyclerViewAdapter (Context context, List<planet> planet){
 
     @Override
     public void onBindViewHolder(@NonNull planetRecyclerViewAdapter.ViewHolder holder, int position) {
-    planet planet = planetlist.get(position);
-    String imageLink = planet.getImage();
-    holder.name.setText("Name: " + planet.getName());
-    holder.desc.setText("Description: " + planet.getDesc());
+    planet p = planetlist.get(position);
+    String imageLink = p.getImage();
+    holder.name.setText("Name: " + p.getName());
+    holder.desc.setText("Description: " + p.getDesc());
         Picasso.get()
                 .load(imageLink)
                 .fit()

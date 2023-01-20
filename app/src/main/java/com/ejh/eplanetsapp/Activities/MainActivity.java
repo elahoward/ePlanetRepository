@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         planetList=getPlanets();
         planetRecyclerViewAdapter = new planetRecyclerViewAdapter(this, planetList);
         recycleView.setAdapter(planetRecyclerViewAdapter);
-        planetRecyclerViewAdapter.notifyDataSetChanged();
     }
     public List <planet> getPlanets(){
     planetList.clear();
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     planetRecyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    planetRecyclerViewAdapter.notifyDataSetChanged();
                 }
             }
         }, new Response.ErrorListener() {
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             params.put("X-RapidAPI-Host", "planets-info-by-newbapi.p.rapidapi.com");
             params.put("X-RapidAPI-Key", "84ea392cf5msh0064c776cf95c0cp10e832jsnf107ffbd881e");
             return params;
+
         }
         };
             rq.add(jarrayRequest);
